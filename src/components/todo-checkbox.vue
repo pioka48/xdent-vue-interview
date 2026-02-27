@@ -6,6 +6,7 @@
             aria-checked
             class="checkbox-content"
             @click="$emit('click')"
+            @keyup="$emit('keyup', $event)"
         >
             <input
                 tabIndex="-1"
@@ -32,7 +33,7 @@ export default defineComponent({
         checked: Boolean,
     },
 
-    emits: ["click", "delete"],
+    emits: ["click", "delete", "keyup"],
 
     setup() {
         return {};

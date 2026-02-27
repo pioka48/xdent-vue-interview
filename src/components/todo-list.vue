@@ -9,6 +9,7 @@
                 :checked="todoItem.checked"
                 @click="() => toggleCheck(todoItem.id)"
                 @delete="() => handleDelete(todoItem.id)"
+                @keyup="(event) => handleKeyUp(event, todoItem.id)"
             />
         </div>
         <div v-else class="no-todos">
@@ -59,6 +60,7 @@ export default defineComponent({
         return {
             toggleCheck,
             handleDelete,
+            handleKeyUp
         };
     },
 });
