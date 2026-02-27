@@ -3,7 +3,10 @@
         <span class="todo-results-info">
             Completed tasks:
             <span
-                class="todo-results-count"
+                :class="{
+                    'todo-results-count--positive': hasCompleted,
+                    'todo-results-count--zero': !hasCompleted
+                }"
             >
                 {{ completedCount }}
             </span>
@@ -31,9 +34,14 @@ export default defineComponent({
             return props.todos.filter(t => t.checked).length
         })
 
+        const hasCompleted = computed(() => {
+            return completedCount.value > 0
+        })
+
         return {
             totalCount,
-            completedCount
+            completedCount,
+            hasCompleted
         };
     },
 })
@@ -53,5 +61,13 @@ export default defineComponent({
     font-size: 14px;
     font-weight: 600;
     color: gray;
+}
+
+.todo-results-count--positive {
+    color: green;
+}
+
+.todo-results-count--zero {
+    color: red;
 }
 </style>
