@@ -11,30 +11,18 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { useTodos } from "../composables/useTodos";
 
 export default defineComponent({
     name: "TodoForm",
 
-    props: ["todos"],
-
-    emits: ["todos-changed"],
-
-    setup(props, { emit }) {
+    setup() {
         const task = ref("");
+        const { addTodo } = useTodos();
 
         const handleAddTodo = () => {
             if (task.value) {
-                emit("todos-changed", [
-                    ...props.todos,
-                    {
-                        id:
-                            props.todos.length > 0
-                                ? props.todos[props.todos.length - 1].id + 1
-                                : 0,
-                        label: task.value,
-                        checked: false,
-                    },
-                ]);
+                addTodo(task.value);
                 task.value = "";
             }
         };

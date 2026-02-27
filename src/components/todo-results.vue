@@ -16,17 +16,14 @@
 </template>
 
 <script>
-import { defineComponent, toRef } from "vue";
+import { defineComponent } from "vue";
 import { useTodoResults } from "../composables/useTodoResults";
 
 export default defineComponent({
     name: "TodoResults",
 
-    props: ["todos"],
-
-    setup(props) {
-        const todosRef = toRef(props, "todos")
-        const { completedCount, totalCount, hasCompleted } = useTodoResults(todosRef)
+    setup() {
+        const { completedCount, totalCount, hasCompleted } = useTodoResults()
 
         return {
             completedCount,

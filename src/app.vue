@@ -1,14 +1,15 @@
 <template>
     <div class="root">
-        <TodoList :todos="todos" @todos-changed="handleTodosChanged" />
-        <TodoForm :todos="todos" @todos-changed="handleTodosChanged" />
-        <TodoResults :todos="todos" />
+        <TodoList />
+        <TodoForm />
+        <TodoResults />
     </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted } from "vue";
 import { todosList } from "./todo-data";
+import { useTodos } from "./composables/useTodos";
 
 import TodoForm from "./components/todo-form.vue";
 import TodoList from "./components/todo-list.vue";
@@ -25,16 +26,13 @@ export default defineComponent({
     },
 
     setup() {
-        const todos = ref(todosList);
+        const { setTodos } = useTodos()
 
-        const handleTodosChanged = (newTodos) => {
-            todos.value = newTodos;
-        };
+        onMounted(() => {
+            setTodos(todosList)
+        })
 
-        return {
-            todos,
-            handleTodosChanged,
-        };
+        return {};
     },
 });
 </script>

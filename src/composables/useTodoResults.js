@@ -1,12 +1,13 @@
 import { computed, ref } from "vue";
+import { useTodos } from "./useTodos";
 
-export function useTodoResults(todosRef) {
-
+export function useTodoResults() {
+    const { todos } = useTodos();
     const completedCount = computed(
-        () => todosRef.value.filter((todo) => todo.checked).length
+        () => todos.value.filter((todo) => todo.checked).length
     );
 
-    const totalCount = computed(() => todosRef.value.length);
+    const totalCount = computed(() => todos.value.length);
 
     const hasCompleted = computed(() => completedCount.value > 0);
 

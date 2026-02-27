@@ -21,38 +21,22 @@
 <script>
 import { defineComponent } from "vue";
 import TodoCheckbox from "./todo-checkbox.vue";
+import { useTodos } from "../composables/useTodos";
 
 export default defineComponent({
     name: "TodoList",
 
     components: { TodoCheckbox },
 
-    props: ["todos"],
+    setup() {
+        const { todos, toggleTodo, deleteTodo } = useTodos();
 
-    emits: ["todos-changed"],
-
-    setup(props, { emit }) {
         const toggleCheck = (id) => {
-            emit(
-                "todos-changed",
-                props.todos.map((el) => {
-                    if (el.id === id) {
-                        return {
-                            ...el,
-                            checked: !el.checked,
-                        };
-                    }
-
-                    return el;
-                })
-            );
+            toggleTodo(id);
         };
 
         const handleDelete = (id) => {
-            emit(
-                "todos-changed",
-                props.todos.filter((todo) => todo.id !== id)
-            )
+            deleteTodo(id);
         };
 
         const handleKeyUp = (e, id) => {
@@ -62,9 +46,10 @@ export default defineComponent({
         };
 
         return {
+            todos,
             toggleCheck,
             handleDelete,
-            handleKeyUp
+            handleKeyUp,
         };
     },
 });
