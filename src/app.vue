@@ -2,14 +2,18 @@
     <div class="root">
         <TodoList :todos="todos" @todos-changed="handleTodosChanged" />
         <TodoForm :todos="todos" @todos-changed="handleTodosChanged" />
+        <TodoResults :todos="todos" />
     </div>
 </template>
 
 <script>
-import TodoForm from "./components/todo-form.vue";
 import { defineComponent, ref } from "vue";
-import TodoList from "./components/todo-list.vue";
 import { todosList } from "./todo-data";
+
+import TodoForm from "./components/todo-form.vue";
+import TodoList from "./components/todo-list.vue";
+import TodoResults from "./components/todo-results.vue"
+
 
 export default defineComponent({
     name: "App",
@@ -17,6 +21,7 @@ export default defineComponent({
     components: {
         TodoList,
         TodoForm,
+        TodoResults
     },
 
     setup() {
