@@ -11,5 +11,6 @@ export function useTodos() {
         toggleTodo: store.toggleTodo,
         deleteTodo: store.deleteTodo,
         setTodos: store.setTodos,
+        loadTodos: store.loadTodos,
     };
 }

@@ -8,7 +8,6 @@
 
 <script>
 import { defineComponent, onMounted } from "vue";
-import { todosList } from "./todo-data";
 import { useTodos } from "./composables/useTodos";
 
 import TodoForm from "./components/todo-form.vue";
@@ -26,11 +25,13 @@ export default defineComponent({
     },
 
     setup() {
-        const { setTodos } = useTodos()
+        const { todos, loadTodos } = useTodos()
 
         onMounted(() => {
-            setTodos(todosList)
-        })
+            if (!todos.value.length) {
+                void loadTodos();
+            }
+        });
 
         return {};
     },

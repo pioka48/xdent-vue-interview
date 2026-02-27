@@ -1,10 +1,44 @@
 import { defineStore } from "pinia";
+import axios from "axios";
+
+const mapApiTodos = (apiTodos) =>
+    apiTodos.map((todo) => ({
+        id: todo.id,
+        label: todo.title,
+        checked: todo.completed,
+    }));
 
 export const useTodosStore = defineStore("todos", {
     state: () => ({
         todos: [],
+        pending: false,
+        loadError: null,
     }),
     actions: {
+        async loadTodos() {
+            if (this.pending) return;
+
+            this.pending = true
+            this.loadError = null;
+
+            try {
+                const response = await axios.get(
+                    "https://jsonplaceholder.typicode.com/todos",
+                    {
+                        params: {
+                            _limit: 5,
+                        },
+                    }
+                );
+
+                this.todos = mapApiTodos(response.data);
+            } catch (error) {
+                this.loadError = error.message ?? String(error);
+                this.todos = [];
+            } finally {
+                this.pending = false;
+            }
+        },
         addTodo(label) {
             if (!label) return;
 
