@@ -1,7 +1,7 @@
 <template>
     <div class="todo-list">
         <span class="todo-list-title">Things to do:</span>
-        <div class="todo-list-content">
+        <div v-if="todos.length" class="todo-list-content">
             <TodoCheckbox
                 v-for="todoItem in todos"
                 :key="todoItem.id"
@@ -10,6 +10,9 @@
                 @click="() => toggleCheck(todoItem.id)"
                 @delete="() => handleDelete(todoItem.id)"
             />
+        </div>
+        <div v-else class="no-todos">
+            <p>No tasks yet</p>
         </div>
     </div>
 </template>
