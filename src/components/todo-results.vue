@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { defineComponent, computed } from "vue";
+import { defineComponent, toRef } from "vue";
+import { useTodoResults } from "../composables/useTodoResults";
 
 export default defineComponent({
     name: "TodoResults",
@@ -24,24 +25,13 @@ export default defineComponent({
     props: ["todos"],
 
     setup(props) {
-
-        const totalCount = computed(() => {
-            return props.todos.length
-        })
-
-        const completedCount = computed(() => {
-            if (!props.todos.length) return 0
-            return props.todos.filter(t => t.checked).length
-        })
-
-        const hasCompleted = computed(() => {
-            return completedCount.value > 0
-        })
+        const todosRef = toRef(props, "todos")
+        const { completedCount, totalCount, hasCompleted } = useTodoResults(todosRef)
 
         return {
-            totalCount,
             completedCount,
-            hasCompleted
+            totalCount,
+            hasCompleted,
         };
     },
 })

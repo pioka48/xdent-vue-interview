@@ -19,7 +19,6 @@
 </template>
 
 <script>
-/* eslint-disable no-unused-vars */
 import { defineComponent } from "vue";
 import TodoCheckbox from "./todo-checkbox.vue";
 
